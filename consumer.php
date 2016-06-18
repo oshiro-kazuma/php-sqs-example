@@ -22,11 +22,19 @@ class Consumer {
     private $repository;
 
     /**
-     * @param Message $m
+     * @param Message[] $messages
      */
-    function consume($m) {
-        echo "[consume] {$m->message}", PHP_EOL;
-        $this->repository->unsubscribe($m);
+    function consuming($messages) {
+        foreach ($messages as $m) {
+            try {
+                echo "[consume] {$m->message}", PHP_EOL;
+                $this->repository->unsubscribe($m);
+            } catch (Exception $e) {
+                echo "[error] sqs_message: $m", PHP_EOL;
+                echo $e->getMessage();
+                echo $e->getTraceAsString();
+            }
+        }
     }
 
     function start() {
@@ -34,20 +42,9 @@ class Consumer {
             echo "[main] consume sqs start.", PHP_EOL;
             try {
                 $messages = $this->repository->subscribe();
-
-                foreach ($messages as $m) {
-                    try {
-                        $this->consume($m);
-                    } catch (Exception $e) {
-                        echo "[error] sqs_message: $m", PHP_EOL;
-                        echo $e->getMessage();
-                        echo $e->getTraceAsString();
-                    }
-                }
-
+                $this->consuming($messages);
                 echo "[main] consume sqs end.", PHP_EOL;
                 sleep(2);
-
             } catch (Exception $e) {
                 echo "[error] sqs consume", PHP_EOL;
                 echo $e->getMessage();
