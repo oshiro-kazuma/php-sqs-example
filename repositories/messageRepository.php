@@ -9,7 +9,7 @@ use Infrastructure\SqsProvider;
 /**
  * Class Repository
  */
-class Repository implements SqsEventRepository {
+class MessageRepository implements SqsEventRepository {
 
     /**
      * Repository constructor.

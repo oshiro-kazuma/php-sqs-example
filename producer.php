@@ -1,13 +1,13 @@
 <?php
 require_once dirname(__FILE__).'/vendor/autoload.php';
 require_once dirname(__FILE__).'/repositories/sqs_provider.php';
-require_once dirname(__FILE__).'/repositories/repository.php';
+require_once dirname(__FILE__) . '/repositories/messageRepository.php';
 
 use Infrastructure\SqsProvider;
 
 $sqs = SqsProvider::getSqs();
 
-$repo = new Repository();
+$repo = new MessageRepository();
 $producer = new Producer($repo);
 $producer->publish();
 
@@ -15,14 +15,14 @@ class Producer {
 
     /**
      * Producer constructor.
-     * @param Repository $repository
+     * @param MessageRepository $repository
      */
-    function __construct(Repository $repository) {
+    function __construct(MessageRepository $repository) {
         $this->repository = $repository;
     }
 
     /**
-     * @var Repository
+     * @var MessageRepository
      */
     private $repository;
 
