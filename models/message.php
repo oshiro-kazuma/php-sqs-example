@@ -14,8 +14,8 @@ class Message implements DomainEvent {
      * @param array $message SQS Message
      * @return Message
      */
-    static function createFromMessage(/*array*/$message) {
-        $m = new Message("");
+    static function createFromMessage(array $message) {
+        $m = new Message();
         $m->message = $message['Body'];
         $m->receiptHandle = $message['ReceiptHandle'];
         return $m;
@@ -25,7 +25,7 @@ class Message implements DomainEvent {
      * Message constructor.
      * @param string $message
      */
-    function __construct($message) {
+    function __construct($message = null) {
         $this->message = $message;
     }
 
