@@ -3,12 +3,19 @@
 /**
  * Interface DomainEvent
  */
-interface DomainEvent { }
+abstract class DomainEvent {
+    /**
+     * @return string
+     */
+    function __toString() {
+        return json_encode($this);
+    }
+}
 
 /**
  * Class Message
  */
-class Message implements DomainEvent {
+class Message extends DomainEvent {
 
     /**
      * @param array $message SQS Message
@@ -27,13 +34,6 @@ class Message implements DomainEvent {
      */
     function __construct($message = null) {
         $this->message = $message;
-    }
-
-    /**
-     * @return string
-     */
-    function __toString() {
-        return json_encode($this);
     }
 
     /**
