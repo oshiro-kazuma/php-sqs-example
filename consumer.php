@@ -39,7 +39,7 @@ class Consumer {
                     try {
                         $this->consume($m);
                     } catch (Exception $e) {
-                        printf("[error] sqs_message:%s".PHP_EOL, $m);
+                        echo "[error] sqs_message: $m", PHP_EOL;
                         echo $e->getMessage();
                         echo $e->getTraceAsString();
                     }
@@ -49,6 +49,7 @@ class Consumer {
                 sleep(2);
 
             } catch (Exception $e) {
+                echo "[error] sqs consume", PHP_EOL;
                 echo $e->getMessage();
                 echo $e->getTraceAsString(), PHP_EOL;
                 sleep(60);

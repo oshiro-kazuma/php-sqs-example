@@ -1,70 +1,10 @@
 <?php
 require_once dirname(__FILE__).'/../vendor/autoload.php';
+require_once dirname(__FILE__).'/../models/message.php';
 require_once dirname(__FILE__).'/sqs_provider.php';
+require_once dirname(__FILE__).'/sqs_event_repository.php';
 
 use Infrastructure\SqsProvider;
-
-/**
- * Interface DomainEvent
- */
-interface DomainEvent { }
-
-/**
- * Class Message
- */
-class Message implements DomainEvent {
-
-    /**
-     * @param array $message SQS Message
-     * @return Message
-     */
-    static function createFromMessage(/*array*/$message) {
-        $m = new Message("");
-        $m->message = $message['Body'];
-        $m->receiptHandle = $message['ReceiptHandle'];
-        return $m;
-    }
-
-    /**
-     * Message constructor.
-     * @param string $message
-     */
-    function __construct($message) {
-        $this->message = $message;
-    }
-
-    /**
-     * @var string
-     */
-    public $message;
-
-    /**
-     * @var string
-     */
-    public $receiptHandle;
-}
-
-/**
- * Interface SqsEventRepository
- */
-interface SqsEventRepository {
-    /**
-     * @param DomainEvent $m
-     * @return
-     */
-    function publish($m);
-
-    /**
-     * @return DomainEvent[]
-     */
-    function subscribe();
-
-    /**
-     * @param DomainEvent $m
-     * @return
-     */
-    function unsubscribe($m);
-}
 
 /**
  * Class Repository
