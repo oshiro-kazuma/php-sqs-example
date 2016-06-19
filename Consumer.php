@@ -1,23 +1,18 @@
 <?php
 require_once dirname(__FILE__).'/vendor/autoload.php';
-require_once dirname(__FILE__) . '/repositories/MessageRepositoryOnSqs.php';
-
-$repo = new MessageRepositoryOnSqs();
-$consumer = new Consumer($repo);
-$consumer->start();
 
 class Consumer {
 
     /**
      * Consumer constructor.
-     * @param MessageRepositoryOnSqs $repository
+     * @param MessageRepository $repository
      */
     function __construct($repository) {
         $this->repository = $repository;
     }
 
     /**
-     * @var MessageRepositoryOnSqs
+     * @var MessageRepository
      */
     private $repository;
 
