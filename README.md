@@ -8,8 +8,8 @@ curl -sS https://getcomposer.org/installer | php
 ./composer.phar install
 
 # publish to sqs
-php producer.php
+php runner.php producer
 
 # consume sqs messages
-php consumer.php
+php runner.php consumer
 ```
